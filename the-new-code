@@ -118,7 +118,7 @@ function Kixley() {
   var swampDiscovery = 0;
   var yesNo = 'Yes, No';
   var listOfCommonRoomGuyName = [
-    'Mithrómen',
+    'MithrÃ³men',
     'Galkemen',
     'Maegfin',
     'Gurthmereth'
@@ -132,6 +132,7 @@ function Kixley() {
   //level
   var temp;
   var tempMinusOne;
+  var swordAdjustedTempMinusOne;
   var level = 1;
   var levelMinusOne = level - 1;
   var levelReq = 100 + level * 200;
@@ -154,8 +155,9 @@ function Kixley() {
     infinity
   ];
   var classNumber;
-  var innFloorNumber
-  //other
+  var attLevelUp
+  // other
+  var innFloorNumber;
   var goldCheat = 0;
   var expCheat = 0;
   var attackCheat = 0;
@@ -243,6 +245,39 @@ function Kixley() {
   ];
   var reward;
  
+  openingMenu = true;
+  StartUpMenu()
+ 
+ /*******************\
+ |      UTILITY      |
+ \*******************/
+ 
+  function randomNumber(min, max) {
+    x = Math.floor(Math.random() * (max - min + 1));
+    x += min
+  }
+
+  function parseBool(stringBool) {
+    if (stringBool === 'true') {
+      return true
+    } else if (stringBool === 'false') {
+      return false
+    }
+    else {
+      return stringBool
+    }
+  }
+  
+  function resetSpec() {
+    spec = [];
+  }
+  
+  function Story() {
+    alert('You are a person named Kixley. You live in the land of Nulm. You are in the Vacant Plains, and you know the town called Smatino resides nearby. You know where it is, but there are monsters in the plains, and one has just spotted you.')
+    alert('Your attack power is ' + attackPower + '.')
+    MonsTypeSwitch()
+  }
+
   function detectMobileDevice() {
     if (navigator.userAgent.match(/Android/i) === true || navigator.userAgent.match(/webOS/i) === true || navigator.userAgent.match(/iPhone/i) === true || navigator.userAgent.match(/iPad/i) === true || navigator.userAgent.match(/iPod/i) === true || navigator.userAgent.match(/BlackBerry/i) === true || navigator.userAgent.match(/Windows Phone/i) === true) {
       return true;
@@ -250,6 +285,219 @@ function Kixley() {
       return false;
     }
   }
+  
+  function GameOver() {
+    alert('You died with ' + totalGold + ' gold, were level ' + level + ', had ' + attackPower + ' power, and had a total of ' + totalHealth + ' health.')
+    Credits()
+    pineapples = bananas
+  }
+
+  function NotAnOption() {
+    alert('That wasn\'t one of the options. Please try again.')
+  }
+
+  function Credits() {
+    for (i = 0; i < theWholeShebang.length; i += 1) {
+      alert(theWholeShebang[i])
+    }
+    window.close()
+  }
+
+  function DevCheats() {
+    answer = prompt('What cheat do you want to activate?', 'Infinite gold, Infinite Exp, Infinite Attack, Infinite Health, Infinite Blobs of Doom, Infinite Accuracy, Activate All, Leave').toLowerCase()
+    switch (answer) {
+      case 'infinite gold':
+      case 'infinite munnies':
+        if (goldCheat === 0) {
+          totalGold /= 0
+          alert('Cheat successfully activated!')
+          goldCheat = 1
+          youCheated = true
+          DevCheats()
+        } else {
+          alert('Deactivating cheat...')
+          totalGold = 0
+          goldCheat = 0
+          alert('You now have 0 gold.')
+          DevCheats()
+        }
+        break;
+      case 'infinite exp':
+      case 'infininite xp':
+      case 'infinite experience':
+        if (expCheat === 0) {
+          totalExp /= 0
+          alert('Cheat successfully activated!')
+          expCheat = 1
+          youCheated = true
+          DevCheats()
+        } else {
+          alert('Deactivating cheat...')
+          totalExp = 0
+          level = 1
+          alert('You are now level 1 and have 0 exp.')
+          DevCheats()
+        }
+        break;
+      case 'infinite attack':
+        if (attackCheat === 0) {
+          baseAttackPower = attackPower
+          attackPower /= 0
+          realAttackPower = attackPower
+          alert('Cheat successfully activated!')
+          attackCheat = 1
+          youCheated = true
+          DevCheats()
+        } else {
+          alert('Deactivating cheat...')
+          attackPower = baseAttackPower
+          alert('You now have ' + attackPower + ' attack.')
+          DevCheats()
+        }
+        break;
+      case 'infinite health':
+        if (healthCheat === 0) {
+          hitPoints = -(Math.log(0))
+          totalHealth = hitPoints
+          alert('Cheat successfully activated!')
+          healthCheat = 1
+          youCheated = true
+          DevCheats()
+        } else {
+          alert('Deactivating cheat...')
+          hitPoints = 100
+          totalHealth = hitPoints
+          alert('You now have 100 health.')
+          DevCheats()
+        }
+        break;
+      case 'infinite blobs of doom':
+      case 'infinite blobs':
+        if (blobOfDoomCheat === 0) {
+          blobsOfDoom = -(Math.log(0))
+          totalBlobsOfDoom = blobsOfDoom
+          alert('Cheat successfully activated!')
+          blobOfDoomCheat = 1
+          youCheated = true
+          DevCheats()
+        } else {
+          alert('Deactivating cheat...')
+          blobsOfDoom = 0
+          totalBlobsOfDoom = blobsOfDoom
+          alert('You now have 0 blobs of doom.')
+        }
+        break;
+      case 'infinite accuracy':
+        if (accCheat === 0) {
+          actualAccuracy = accuracy
+          accuracy = infinity
+          alert('Cheat successfully activated!')
+          accCheat = 1
+          youCheated = true
+          DevCheats()
+        } else {
+          alert('Deactivating cheat...')
+          accCheat = 0
+          accuracy = actualAccuracy
+          alert('You now have normal accuracy.')
+        }
+        break;
+      case 'activate all':
+        totalGold = -(Math.log(0))
+        totalExp = -(Math.log(0))
+        attackPower = -(Math.log(0))
+        realAttackPower = attackPower
+        hitPoints = -(Math.log(0))
+        totalHealth = hitPoints
+        blobsOfDoom = -(Math.log(0))
+        totalBlobsOfDoom = blobsOfDoom
+        goldCheat = 1
+        expCheat = 1
+        attackCheat = 1
+        healthCheat = 1
+        blobOfDoomCheat = 1
+        youCheated = true
+        alert('All cheats activated!')
+        DevCheats()
+        break;
+      case 'leave':
+        StartUpMenu()
+        break;
+      default:
+        NotAnOption()
+        DevCheats()
+        break;
+    }
+  }
+  
+  function inTower() {
+    alert('You see this group of prisoners in a dungeon talking about this guy named Balbeag who sent TivÃ©l to destroy Smatino, because this person named Kixley had defeated a lot of his henchmen, the monsters of the Vacant Plains. They say that they hope TivÃ©l tripped over a root in the swamp and drowned in the water.')
+    hideOrFight()
+  }
+
+  function DevPassAttempt() {
+    answer = prompt('What is the password?', 'Leave').toUpperCase()
+    switch (answer) {
+      case 'LEAVE':
+        alert('Now leaving')
+        return 42
+        break;
+      case '65810':
+        return true
+        break;
+      default:
+        return false
+        break;
+    }
+  }
+
+  function NIY() {
+    alert('Sorry. That feauture hasn\'t been implemented yet.')
+  }
+ 
+  function checkToEndFight() {
+    if (hitCounter <= 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  function percentChance(percent) {
+    randomNumber(1, 100)
+    theVariableWithinPercentChance = x
+    randomNumber(0, 9)
+    x /= 10
+    theVariableWithinPercentChance += x
+    randomNumber(0, 9)
+    x /= 100
+    theVariableWithinPercentChance += x
+    randomNumber(0, 9)
+    x /= 1000
+    theVariableWithinPercentChance += x
+    if (theVariableWithinPercentChance >= 100) {
+      theVariableWithinPercentChance = 100
+    }
+    if (theVariableWithinPercentChance <= percent) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  function FightRound(n) {
+    if (n < 1) {
+      return 1
+    }
+    else {
+      n = Math.round(n)
+      return n
+    }
+  }
+  
+  /**********************\
+  | All that other stuff |
+  \**********************/
 
   function Options() {
     alert('This is the options menu!');
@@ -359,9 +607,9 @@ function Kixley() {
           InTown()
         } else {
           alert('As you near the outskirts of town, you notice the stream of people leaving town. Then you notice that the entire place is now just a gigantic blast crater. Somebody blew it up!!! You decide to investigate, and walk over to the stream of people.')
-          alert('When you reach the people, they all say this person named Tivél had just come to town and started fires all over, and then used some weird, magical powers to blow up Smatino.')
-          alert('You are sure this Tivél is the same as the one who you met in the swamp, and wish you had used some \'weird, magical powers\' to blow him up')
-          alert('You race back to the swamp, and see him from a distance. You can\'t, however, blow him up. There are too many vines in the way. So, you follow him. You see a large tower in the distance, and finally, after a few hours, reach it at night. You see Tivél enter, and then, as the gate is clanging down above him, you slide under it and manage to get in.')
+          alert('When you reach the people, they all say this person named TivÃ©l had just come to town and started fires all over, and then used some weird, magical powers to blow up Smatino.')
+          alert('You are sure this TivÃ©l is the same as the one who you met in the swamp, and wish you had used some \'weird, magical powers\' to blow him up')
+          alert('You race back to the swamp, and see him from a distance. You can\'t, however, blow him up. There are too many vines in the way. So, you follow him. You see a large tower in the distance, and finally, after a few hours, reach it at night. You see TivÃ©l enter, and then, as the gate is clanging down above him, you slide under it and manage to get in.')
           inTower()
         }
         break;
@@ -411,7 +659,7 @@ function Kixley() {
           Places();
         } else {
           if (swampCounter === 7 && killCounter >= 14) {
-            alert('As you are walking through the swamp, you meet someone. He says his name is Tivél, and he is heading towards Smatino, but doesn\'t tell why.')
+            alert('As you are walking through the swamp, you meet someone. He says his name is TivÃ©l, and he is heading towards Smatino, but doesn\'t tell why.')
             aabeaDestroysTown = true
           }
           randomNumber(1, 2)
@@ -556,29 +804,11 @@ function Kixley() {
     }
   }
 
-  function randomNumber(min, max) {
-    x = Math.floor(Math.random() * (max - min + 1));
-    x += min
-  }
-  openingMenu = true;
-  StartUpMenu()
-
-  function parseBool(stringBool) {
-    if (stringBool === 'true') {
-      return true
-    } else if (stringBool === 'false') {
-      return false
-    }
-    else {
-      return stringBool
-    }
-  }
-
   function StartUpMenu() {
     if (openingMenu === true) {
       randomNumber(1, 10000);
       switch (x) {
-        case 1:
+        case 3141:
           alert('WELCOME TO unnamedTextAdventure!');
           break;
         default:
@@ -796,10 +1026,6 @@ function Kixley() {
       localStorage.setItem(username + 'Difficulty@Kixley@65810', diffSetting)
       inAccount()
     }
-  }
-  
-  function resetSpec() {
-    spec = [];
   }
   
   function KnightClass() {
@@ -1255,14 +1481,9 @@ function Kixley() {
       ChooseClass()
     } else if (PassOrNot === '') {
       PassOrNot = DevPassAttempt()
-      SuperHardcoreClass()
+      ValaClass()
     } else {
       alert('Bad boy. Go sit in an infinite loop.')
-      while (true) {
-        alert('-rAQZdew')
-        alert('That message was brought to you by Murphy, one of the programmer\'s dog.')
-        alert('Also this is an infinite loop')
-      }
       while (true) {
         alert('-rAQZdew')
         alert('That message was brought to you by Murphy, one of the programmer\'s dog.')
@@ -1315,6 +1536,7 @@ function Kixley() {
       if (hitPoints <= 0) {
         alert('You died.')
         GameOver()
+        pineapples = bananas
       } else {
         alert('You have ' + hitPoints + ' health left.')
         FightMenu()
@@ -1369,12 +1591,7 @@ function Kixley() {
         break;
     }
   }
-
-  function Story() {
-    alert('You are a person named Kixley. You live in the land of Nulm. You are in the Vacant Plains, and you know the town called Smatino resides nearby. You know where it is, but there are monsters in the plains, and one has just spotted you.')
-    alert('Your attack power is ' + attackPower + '.')
-    MonsTypeSwitch()
-  }
+  
   function MonsTypeSwitch() {
       switch (actualMonsName) {
       case 'Goblin':
@@ -1433,7 +1650,7 @@ function Kixley() {
   }
   
   function FightMenu() {
-    answer = prompt('What do you do? Health: ' + hitPoints + '. ' + actualMonsName + ' health: ' + hitCounter + '. ' + actualMonsName + ' type: ' + monsType + '.', 'Fight, Health Potion, Magic, Special Attacks, Run').toUpperCase()
+    answer = prompt('What do you do? Health: ' + hitPoints + '. ' + actualMonsName + ' health: ' + FightRound(hitCounter) + '. ' + actualMonsName + ' type: ' + monsType + '.', 'Fight, Health Potion, Magic, Special Attacks, Run').toUpperCase()
     switch (answer) {
       case 'FIGHT':
         HitOrMiss()
@@ -1512,7 +1729,6 @@ function Kixley() {
         case false:
           alert('You weren\'t able to get a combo.')
           damage = attackPower
-          roundDamage()
           burn()
           break;
         case true:
@@ -1524,13 +1740,11 @@ function Kixley() {
           multiplier()
           alert('You got a ' + comboNums + ' combo.')
           damage = attackPower * comboNums
-          roundDamage()
           break;
       }
       randomNumber(1,5)
       blobsOfDoom += x
-      roundDamage()
-      alert('You did ' + damage + ' damage.')
+      alert('You did ' + FightRound(damage) + ' damage.')
       alert(x + ' blobs of doom gained!')
       hitCounter -= damage
     }
@@ -1539,14 +1753,9 @@ function Kixley() {
     if (checkToEndFight() === true) {
       WonTheFight()
     } else {
-      alert(actualMonsNameWithThe + ' has ' + hitCounter + ' health left.')
+      alert(actualMonsNameWithThe + ' has ' + FightRound(hitCounter) + ' health left.')
       MonsAtt()
     }
-  }
-
-  function GameOver() {
-    alert('You died with ' + totalGold + ' gold, were level ' + level + ', had ' + attackPower + ' power, and had a total of ' + totalHealth + ' health.')
-    Credits()
   }
 
   function BuyHealthPotion() {
@@ -1659,7 +1868,7 @@ function Kixley() {
         alert('You don\'t have enough gold to buy that many arrows. At max you could buy ' + Math.floor(totalGold / aCost) + ' arrows(s).')
         InShop()
       }
-      answer = confirm('Are you sure? You\'re going to buy ' + answer + ' arrows, and you have ' + totalGold + ' gold.', 'Yes, No')
+      answer = confirm('Are you sure? You\'re going to buy ' + answer + ' arrows, and you have ' + totalGold + ' gold. This will cost ' + (aCost * howMany) + ' gold.', 'Yes, No')
       switch (answer) {
         case true:
           alert('Arrow(s) bought!')
@@ -1736,7 +1945,7 @@ function Kixley() {
             case 'YES':
               totalGold += .9 * wsCost
               woodenSword = 0
-              attackPower -= (0.05 * baseAttackPower * (3 - diffSetting))
+              attackPower = baseAttackPower
               alert('Wooden sword sold!')
               InShop()
               break;
@@ -1898,16 +2107,6 @@ function Kixley() {
     }
   }
 
-  function NotAnOption() {
-    alert('That wasn\'t one of the options. Please try again.')
-  }
-
-  function Credits() {
-    for (i = 0; i < theWholeShebang.length; i += 1) {
-      alert(theWholeShebang[i])
-    }
-    window.close()
-  }
   function ChooseSpell() {
     if (chosenClass === 'cleric') {
       answer = prompt('What spell? You have ' + blobsOfDoom + ' blobs of doom.', 'List, Fire, Rage, Heal, Cancel').toUpperCase()
@@ -1992,7 +2191,7 @@ function Kixley() {
       inTowerPostDoomedGroup()
     }
     else if (fightingAAbea){
-      alert('Tivél is defeated!')
+      alert('TivÃ©l is defeated!')
       fightingAAbea = false
       finalBossFight()
     }
@@ -2201,13 +2400,13 @@ function Kixley() {
   }
 
   function blobsOfDoomShop() {
-    answer = prompt('You walk up to Mithrómen. He says, \'Hey kid. I\'m runnin\' low on money, so I\'m selling my blobs o\' doom. So far there\'s been no buyers. You up for it? Only 10 gold for 6 blobs o\' doom.\'', 'Yes, No').toUpperCase()
+    answer = prompt('You walk up to MithrÃ³men. He says, \'Hey kid. I\'m runnin\' low on money, so I\'m selling my blobs o\' doom. So far there\'s been no buyers. You up for it? Only 10 gold for 6 blobs o\' doom.\'', 'Yes, No').toUpperCase()
     switch (answer) {
       case 'YES':
         GettingBlobsOfDoom()
         break;
       case 'NO':
-        alert('Mithrómen sighs as you leave.')
+        alert('MithrÃ³men sighs as you leave.')
         InInn()
         break;
       default:
@@ -2344,138 +2543,6 @@ function Kixley() {
     }
   }
 
-  function DevCheats() {
-    answer = prompt('What cheat do you want to activate?', 'Infinite gold, Infinite Exp, Infinite Attack, Infinite Health, Infinite Blobs of Doom, Infinite Accuracy, Activate All, Leave').toLowerCase()
-    switch (answer) {
-      case 'infinite gold':
-      case 'infinite munnies':
-        if (goldCheat === 0) {
-          totalGold /= 0
-          alert('Cheat successfully activated!')
-          goldCheat = 1
-          youCheated = true
-          DevCheats()
-        } else {
-          alert('Deactivating cheat...')
-          totalGold = 0
-          goldCheat = 0
-          alert('You now have 0 gold.')
-          DevCheats()
-        }
-        break;
-      case 'infinite exp':
-      case 'infininite xp':
-      case 'infinite experience':
-        if (expCheat === 0) {
-          totalExp /= 0
-          alert('Cheat successfully activated!')
-          expCheat = 1
-          youCheated = true
-          DevCheats()
-        } else {
-          alert('Deactivating cheat...')
-          totalExp = 0
-          level = 1
-          alert('You are now level 1 and have 0 exp.')
-          DevCheats()
-        }
-        break;
-      case 'infinite attack':
-        if (attackCheat === 0) {
-          baseAttackPower = attackPower
-          attackPower /= 0
-          realAttackPower = attackPower
-          alert('Cheat successfully activated!')
-          attackCheat = 1
-          youCheated = true
-          DevCheats()
-        } else {
-          alert('Deactivating cheat...')
-          attackPower = baseAttackPower
-          alert('You now have ' + attackPower + ' attack.')
-          DevCheats()
-        }
-        break;
-      case 'infinite health':
-        if (healthCheat === 0) {
-          hitPoints = -(Math.log(0))
-          totalHealth = hitPoints
-          alert('Cheat successfully activated!')
-          healthCheat = 1
-          youCheated = true
-          DevCheats()
-        } else {
-          alert('Deactivating cheat...')
-          hitPoints = 100
-          totalHealth = hitPoints
-          alert('You now have 100 health.')
-          DevCheats()
-        }
-        break;
-      case 'infinite blobs of doom':
-      case 'infinite blobs':
-        if (blobOfDoomCheat === 0) {
-          blobsOfDoom = -(Math.log(0))
-          totalBlobsOfDoom = blobsOfDoom
-          alert('Cheat successfully activated!')
-          blobOfDoomCheat = 1
-          youCheated = true
-          DevCheats()
-        } else {
-          alert('Deactivating cheat...')
-          blobsOfDoom = 0
-          totalBlobsOfDoom = blobsOfDoom
-          alert('You now have 0 blobs of doom.')
-        }
-        break;
-      case 'infinite accuracy':
-        if (accCheat === 0) {
-          actualAccuracy = accuracy
-          accuracy = infinity
-          alert('Cheat successfully activated!')
-          accCheat = 1
-          youCheated = true
-          DevCheats()
-        } else {
-          alert('Deactivating cheat...')
-          accCheat = 0
-          accuracy = actualAccuracy
-          alert('You now have normal accuracy.')
-        }
-        break;
-      case 'activate all':
-        totalGold = -(Math.log(0))
-        totalExp = -(Math.log(0))
-        attackPower = -(Math.log(0))
-        realAttackPower = attackPower
-        hitPoints = -(Math.log(0))
-        totalHealth = hitPoints
-        blobsOfDoom = -(Math.log(0))
-        totalBlobsOfDoom = blobsOfDoom
-        goldCheat = 1
-        expCheat = 1
-        attackCheat = 1
-        healthCheat = 1
-        blobOfDoomCheat = 1
-        youCheated = true
-        alert('All cheats activated!')
-        DevCheats()
-        break;
-      case 'leave':
-        StartUpMenu()
-        break;
-      default:
-        NotAnOption()
-        DevCheats()
-        break;
-    }
-  }
-
-  function inTower() {
-    alert('You see this group of prisoners in a dungeon talking about this guy named Balbeag who sent Tivél to destroy Smatino, because this person named Kixley had defeated a lot of his henchmen, the monsters of the Vacant Plains. They say that they hope Tivél tripped over a root in the swamp and drowned in the water.')
-    hideOrFight()
-  }
-
   function hideOrFight() {
     answer = (prompt('Suddenly, you see soldiers talking about how great their master Balbeag is. Do you take them down, or hide from them?', 'Take Them Down, Hide').toLowerCase())
     actualMonsNameWithThe = 'The Group of Balbeag\'s Soldiers'
@@ -2530,7 +2597,7 @@ function Kixley() {
           attackPower = 1000
           magicSkillz = 2000000000000
           accuracy = 100
-          alert('You transform into a dragon, and kill the soldiers as well as Tivél. You then blast down Balbeag\'s door and fight him too.')
+          alert('You transform into a dragon, and kill the soldiers as well as TivÃ©l. You then blast down Balbeag\'s door and fight him too.')
           finalBossFight()
         }
       default:
@@ -2542,9 +2609,9 @@ function Kixley() {
 
   function inTowerPostDoomedGroup() {
     loc = 4
-    alert('You climb on up the tower, and meet a trembling Tivél, who has just reported to Balbeag. You then have to fight him.')
+    alert('You climb on up the tower, and meet a trembling TivÃ©l, who has just reported to Balbeag. You then have to fight him.')
     monsLev = 25
-    actualMonsName = 'Tivél'
+    actualMonsName = 'TivÃ©l'
     actualMonsNameWithThe = actualMonsName
     actualMonsNameLowerThe = actualMonsName
     fightingAAbea = true
@@ -2557,7 +2624,7 @@ function Kixley() {
     loc = 5
     towerSaveMenu()
     if (chosenClass !== 'dragon'){
-      alert('You use some blobs of doom that you find in Tivél\'s bag to blast down the door and fight Balbeag!')
+      alert('You use some blobs of doom that you find in TivÃ©l\'s bag to blast down the door and fight Balbeag!')
     }
     monsLev = 9001
     actualMonsName = 'Balbeag'
@@ -2574,7 +2641,8 @@ function Kixley() {
     answer = (prompt('You beat the game! Would you like to continue?', yesNo).toLowerCase())
     switch (answer) {
       case 'yes':
-        alert('You return to Smatino, ready to fight Balbeag\'s remaining monsters who still are evil, though their master is dead');
+        alert('You return and help rebuild Smatino, ready to fight Balbeag\'s remaining monsters who still are evil, though their master is dead');
+        aabeaDestroysTown = false
         InTown()
         break;
       case 'no':
@@ -2591,8 +2659,10 @@ function Kixley() {
     answer = prompt('Please choose a stat to level up: Attack + ' + tempMinusOne + ', Health + ' + levelUpHealth + ', Blobs of Doom + ' + levelUpBlobsOfDoom + '.', 'Attack, Health, Blobs of Doom').toUpperCase()
     switch (answer) {
       case 'ATTACK':
-        alert('You got ' + tempMinusOne + ' attack!')
-        attackPower += tempMinusOne
+        alert('You got ' + swordAdjustedTempMinusOne + ' attack!')
+        attackPower += swordAdjustedTempMinusOne
+        baseAttackPower += tempMinusOne
+        attLevelUp += 1
         break;
       case 'HEALTH':
         alert('You got ' + levelUpHealth + ' health!')
@@ -2611,28 +2681,14 @@ function Kixley() {
     }
   }
 
-  function DevPassAttempt() {
-    answer = prompt('What is the password?', 'Leave').toUpperCase()
-    switch (answer) {
-      case 'LEAVE':
-        alert('Now leaving')
-        return 42
-        break;
-      case '65810':
-        return true
-        break;
-      default:
-        return false
-        break;
-    }
-  }
-
   function checkForLevelUp() {
     if (totalExp >= levelReq) {
       levelMinusOne = level
       level += 1
       temp = Math.floor(1.2 * level)
       tempMinusOne = temp - 1
+      swordAdjustedTempMinusOne = tempMinusOne * (0.05 * woodenSword * (3 - diffSetting))
+      swordAdjustedTempMinusOne += tempMinusOne
       levelUpHealth = 50
       levelUpHealth += classHealthChanges[classNumber]
       levelUpHealth *= levelMinusOne
@@ -2646,14 +2702,14 @@ function Kixley() {
   }
 
   function inCommonRoom() {
-    answer = prompt('The Innkeeper gestures towards a loud, brightly lit room. It is filled with people. You walk over to a corner of the room, where there are four guys. One is named Mithrómen, another is named Galkemen, another is named Maegfin, and the fourth is named Gurthmereth. All four say \'Hi!\'. Do you run away from them in fear, or talk to one of them? If you talk who do you talk to?', 'Run away in fear, Talk to Mithrómen, talk to Galkemen, talk to Maegfin, talk to Gurthmereth').toLowerCase()
+    answer = prompt('The Innkeeper gestures towards a loud, brightly lit room. It is filled with people. You walk over to a corner of the room, where there are four guys. One is named MithrÃ³men, another is named Galkemen, another is named Maegfin, and the fourth is named Gurthmereth. All four say \'Hi!\'. Do you run away from them in fear, or talk to one of them? If you talk who do you talk to?', 'Run away in fear, Talk to MithrÃ³men, talk to Galkemen, talk to Maegfin, talk to Gurthmereth').toLowerCase()
     switch (answer) {
       case 'run away in fear':
         alert('You run away in fear.')
         InInn()
         break;
       case 'talk to mithromen':
-      case 'talk to mithrómen':
+      case 'talk to mithrÃ³men':
         blobsOfDoomShop()
         break;
       case 'talk to galkemen':
@@ -2788,10 +2844,6 @@ function Kixley() {
     }
   }
 
-  function NIY() {
-    alert('Sorry. That feauture hasn\'t been implemented yet.')
-  }
-
   function killQuestEvaluate() {
     if (killQuestReq >= (killCounter -= questKillStart)) {
       alert('Galkemen says \'Thanks fer killin\' those monsters. Have ' + reward + ' gold.\'')
@@ -2834,15 +2886,7 @@ function Kixley() {
       InTown()
     }
   }
- 
-  function checkToEndFight() {
-    if (hitCounter <= 0) {
-      return true
-    } else {
-      return false
-    }
-  }
-
+  
   function fire() {
     alert('You summon a ball of fire and throw it at the ' + actualMonsName + '.')
     hitCounter -= (20 * magicSkillz)
@@ -2919,32 +2963,6 @@ function Kixley() {
     else {
       alert('You fail to steal the monster\' weapon.')
     }
-  }
-
-  function percentChance(percent) {
-    randomNumber(1, 100)
-    theVariableWithinPercentChance = x
-    randomNumber(0, 9)
-    x /= 10
-    theVariableWithinPercentChance += x
-    randomNumber(0, 9)
-    x /= 100
-    theVariableWithinPercentChance += x
-    randomNumber(0, 9)
-    x /= 1000
-    theVariableWithinPercentChance += x
-    if (theVariableWithinPercentChance >= 100) {
-      theVariableWithinPercentChance = 100
-    }
-    if (theVariableWithinPercentChance <= percent) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  function roundDamage() {
-    damage = ((Math.round((10 * damage))) / 10)
   }
 
   function towerSaveMenu() {
