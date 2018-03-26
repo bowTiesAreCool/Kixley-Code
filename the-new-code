@@ -1320,6 +1320,8 @@ function Kixley() {
             accuracy += 15
             dropMult += 0.5
             classNumber = 6
+            hasSpecial = true
+            specOrNo = 'Special Attack, '
             break;
           case 'ninja':
             attackPower -= 2
@@ -1327,8 +1329,6 @@ function Kixley() {
             accuracy += 20
             monsAcc -= 10
             classNumber = 7
-            hasSpecial = true
-            specOrNo = 'Special Attack, '
             break;
           case 'cavalry':
             attackPower += 1
