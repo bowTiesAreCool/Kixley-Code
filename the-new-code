@@ -103,6 +103,7 @@ function Kixley() {
   var usedSteal = false;
   var flamingSword = false;
   var baseAttackPower = attackPower
+  var specOrNo = ''
   //monster drops
   var goldDrops;
   var expPoints;
@@ -118,7 +119,7 @@ function Kixley() {
   var swampDiscovery = 0;
   var yesNo = 'Yes, No';
   var listOfCommonRoomGuyName = [
-    'MithrÃ³men',
+    'Mithrómen',
     'Galkemen',
     'Maegfin',
     'Gurthmereth'
@@ -309,7 +310,7 @@ function Kixley() {
       case 'infinite gold':
       case 'infinite munnies':
         if (goldCheat === 0) {
-          totalGold /= 0
+          totalGold = -(Math.log(0))
           alert('Cheat successfully activated!')
           goldCheat = 1
           youCheated = true
@@ -326,7 +327,7 @@ function Kixley() {
       case 'infininite xp':
       case 'infinite experience':
         if (expCheat === 0) {
-          totalExp /= 0
+          totalExp = -(Math.log(0))
           alert('Cheat successfully activated!')
           expCheat = 1
           youCheated = true
@@ -342,7 +343,7 @@ function Kixley() {
       case 'infinite attack':
         if (attackCheat === 0) {
           baseAttackPower = attackPower
-          attackPower /= 0
+          attackPower = -(Math.log(0))
           realAttackPower = attackPower
           alert('Cheat successfully activated!')
           attackCheat = 1
@@ -431,7 +432,7 @@ function Kixley() {
   }
   
   function inTower() {
-    alert('You see this group of prisoners in a dungeon talking about this guy named Balbeag who sent TivÃ©l to destroy Smatino, because this person named Kixley had defeated a lot of his henchmen, the monsters of the Vacant Plains. They say that they hope TivÃ©l tripped over a root in the swamp and drowned in the water.')
+    alert('You see this group of prisoners in a dungeon talking about this guy named Balbeag who sent Tivél to destroy Smatino, because this person named Kixley had defeated a lot of his henchmen, the monsters of the Vacant Plains. They say that they hope Tivél tripped over a root in the swamp and drowned in the water.')
     hideOrFight()
   }
 
@@ -607,9 +608,9 @@ function Kixley() {
           InTown()
         } else {
           alert('As you near the outskirts of town, you notice the stream of people leaving town. Then you notice that the entire place is now just a gigantic blast crater. Somebody blew it up!!! You decide to investigate, and walk over to the stream of people.')
-          alert('When you reach the people, they all say this person named TivÃ©l had just come to town and started fires all over, and then used some weird, magical powers to blow up Smatino.')
-          alert('You are sure this TivÃ©l is the same as the one who you met in the swamp, and wish you had used some \'weird, magical powers\' to blow him up')
-          alert('You race back to the swamp, and see him from a distance. You can\'t, however, blow him up. There are too many vines in the way. So, you follow him. You see a large tower in the distance, and finally, after a few hours, reach it at night. You see TivÃ©l enter, and then, as the gate is clanging down above him, you slide under it and manage to get in.')
+          alert('When you reach the people, they all say this person named Tivél had just come to town and started fires all over, and then used some weird, magical powers to blow up Smatino.')
+          alert('You are sure this Tivél is the same as the one who you met in the swamp, and wish you had used some \'weird, magical powers\' to blow him up')
+          alert('You race back to the swamp, and see him from a distance. You can\'t, however, blow him up. There are too many vines in the way. So, you follow him. You see a large tower in the distance, and finally, after a few hours, reach it at night. You see Tivél enter, and then, as the gate is clanging down above him, you slide under it and manage to get in.')
           inTower()
         }
         break;
@@ -659,7 +660,7 @@ function Kixley() {
           Places();
         } else {
           if (swampCounter === 7 && killCounter >= 14) {
-            alert('As you are walking through the swamp, you meet someone. He says his name is TivÃ©l, and he is heading towards Smatino, but doesn\'t tell why.')
+            alert('As you are walking through the swamp, you meet someone. He says his name is Tivél, and he is heading towards Smatino, but doesn\'t tell why.')
             aabeaDestroysTown = true
           }
           randomNumber(1, 2)
@@ -906,6 +907,7 @@ function Kixley() {
           alert('-rAQZdew')
           alert('That message was brought to you by Murphy, one of the programmer\'s dog.')
         }
+        break;
       default:
         NotAnOption()
         StartUpMenu()
@@ -934,6 +936,7 @@ function Kixley() {
             InTown()
             break;
         }
+        break;
       case 'save':
         saveMenu()
         break;
@@ -1325,6 +1328,7 @@ function Kixley() {
             monsAcc -= 10
             classNumber = 7
             hasSpecial = true
+            specOrNo = 'Special Attack, '
             break;
           case 'cavalry':
             attackPower += 1
@@ -1344,6 +1348,7 @@ function Kixley() {
             accuracy += 30
             classNumber = 9
             hasSpecial = true
+            specOrNo = 'Special Attack, '
             break;
           case 'super hardcore':
             magicSkillz = (1 / x)
@@ -1403,6 +1408,9 @@ function Kixley() {
           PrinceClass()
           break;
         case 'arch-mage':
+        case 'archmage':
+        case 'arch mage':
+          chosenClass = 'arch-mage'
           ArchmageClass()
           break;
         case 'thief':
@@ -1650,7 +1658,7 @@ function Kixley() {
   }
   
   function FightMenu() {
-    answer = prompt('What do you do? Health: ' + hitPoints + '. ' + actualMonsName + ' health: ' + FightRound(hitCounter) + '. ' + actualMonsName + ' type: ' + monsType + '.', 'Fight, Health Potion, Magic, Special Attacks, Run').toUpperCase()
+    answer = prompt('What do you do? Health: ' + hitPoints + '. ' + actualMonsName + ' health: ' + FightRound(hitCounter) + '. ' + actualMonsName + ' type: ' + monsType + '.', 'Fight, Health Potion, Magic, ' + specOrNo + 'Run').toUpperCase()
     switch (answer) {
       case 'FIGHT':
         HitOrMiss()
@@ -1684,6 +1692,7 @@ function Kixley() {
       case 'SPECIAL':
       case 'SPECIAL ATTACK':
       case 'SPECIAL ATTACKS':
+      case 'SPEC':
         ChooseSpec()
         break;
       case 'RUN':
@@ -1986,6 +1995,7 @@ function Kixley() {
         break;
       case 'CANCEL':
         InShop()
+        break;
       case 'NUCLEAR WEAPONS':
         if(flamingSword) {
           NotAnOption()
@@ -2089,6 +2099,7 @@ function Kixley() {
           alert('You go back into town');
           InTown()
         }
+        break;
       case 'NO':
         alert('The man sighs as you leave the inn.')
         InTown()
@@ -2149,13 +2160,19 @@ function Kixley() {
   }
   
   function ChooseSpec() {
-    if (hasSpecial === true) {
+    if (spec[1] !== undefined) {
       answer = confirm('Would you like to use your special attack? It is ' + spec[0] + '. It\'s decription is \'' + spec[1] + '\'.', 'Yes, No')
       switch(answer) {
-        case 'YES':
+        case true:
           doSpec()
+          if(hitCounter <= 0) {
+            WonTheFight()
+          }
+          else {
+           MonsAtt()
+          }
           break;
-        case 'NO':
+        case true:
           FightMenu()
           break;
         default:
@@ -2191,7 +2208,7 @@ function Kixley() {
       inTowerPostDoomedGroup()
     }
     else if (fightingAAbea){
-      alert('TivÃ©l is defeated!')
+      alert('Tivél is defeated!')
       fightingAAbea = false
       finalBossFight()
     }
@@ -2400,13 +2417,13 @@ function Kixley() {
   }
 
   function blobsOfDoomShop() {
-    answer = prompt('You walk up to MithrÃ³men. He says, \'Hey kid. I\'m runnin\' low on money, so I\'m selling my blobs o\' doom. So far there\'s been no buyers. You up for it? Only 10 gold for 6 blobs o\' doom.\'', 'Yes, No').toUpperCase()
+    answer = prompt('You walk up to Mithrómen. He says, \'Hey kid. I\'m runnin\' low on money, so I\'m selling my blobs o\' doom. So far there\'s been no buyers. You up for it? Only 10 gold for 6 blobs o\' doom.\'', 'Yes, No').toUpperCase()
     switch (answer) {
       case 'YES':
         GettingBlobsOfDoom()
         break;
       case 'NO':
-        alert('MithrÃ³men sighs as you leave.')
+        alert('Mithrómen sighs as you leave.')
         InInn()
         break;
       default:
@@ -2450,6 +2467,7 @@ function Kixley() {
             reward = x
             reward += 5 * (3 - diffSetting)
         }
+        break;
       default:
         switch (y) {
           case 1:
@@ -2597,9 +2615,10 @@ function Kixley() {
           attackPower = 1000
           magicSkillz = 2000000000000
           accuracy = 100
-          alert('You transform into a dragon, and kill the soldiers as well as TivÃ©l. You then blast down Balbeag\'s door and fight him too.')
+          alert('You transform into a dragon, and kill the soldiers as well as Tivél. You then blast down Balbeag\'s door and fight him too.')
           finalBossFight()
         }
+        break;
       default:
         alert('That wasn\'t an option. Please fight a group of Balbeag\'s soldiers.')
         FightMenu()
@@ -2609,9 +2628,9 @@ function Kixley() {
 
   function inTowerPostDoomedGroup() {
     loc = 4
-    alert('You climb on up the tower, and meet a trembling TivÃ©l, who has just reported to Balbeag. You then have to fight him.')
+    alert('You climb on up the tower, and meet a trembling Tivél, who has just reported to Balbeag. You then have to fight him.')
     monsLev = 25
-    actualMonsName = 'TivÃ©l'
+    actualMonsName = 'Tivél'
     actualMonsNameWithThe = actualMonsName
     actualMonsNameLowerThe = actualMonsName
     fightingAAbea = true
@@ -2624,7 +2643,7 @@ function Kixley() {
     loc = 5
     towerSaveMenu()
     if (chosenClass !== 'dragon'){
-      alert('You use some blobs of doom that you find in TivÃ©l\'s bag to blast down the door and fight Balbeag!')
+      alert('You use some blobs of doom that you find in Tivél\'s bag to blast down the door and fight Balbeag!')
     }
     monsLev = 9001
     actualMonsName = 'Balbeag'
@@ -2702,14 +2721,14 @@ function Kixley() {
   }
 
   function inCommonRoom() {
-    answer = prompt('The Innkeeper gestures towards a loud, brightly lit room. It is filled with people. You walk over to a corner of the room, where there are four guys. One is named MithrÃ³men, another is named Galkemen, another is named Maegfin, and the fourth is named Gurthmereth. All four say \'Hi!\'. Do you run away from them in fear, or talk to one of them? If you talk who do you talk to?', 'Run away in fear, Talk to MithrÃ³men, talk to Galkemen, talk to Maegfin, talk to Gurthmereth').toLowerCase()
+    answer = prompt('The Innkeeper gestures towards a loud, brightly lit room. It is filled with people. You walk over to a corner of the room, where there are four guys. One is named Mithrómen, another is named Galkemen, another is named Maegfin, and the fourth is named Gurthmereth. All four say \'Hi!\'. Do you run away from them in fear, or talk to one of them? If you talk who do you talk to?', 'Run away in fear, Talk to Mithrómen, talk to Galkemen, talk to Maegfin, talk to Gurthmereth').toLowerCase()
     switch (answer) {
       case 'run away in fear':
         alert('You run away in fear.')
         InInn()
         break;
       case 'talk to mithromen':
-      case 'talk to mithrÃ³men':
+      case 'talk to mithrómen':
         blobsOfDoomShop()
         break;
       case 'talk to galkemen':
@@ -2945,6 +2964,12 @@ function Kixley() {
       arrows -= 1
       alert('You did ' + x + 'damage by shooting the monster!')
       alert('You have ' + arrows + 'arrows!')
+      if (hitCounter <= 0) {
+        WonTheFight()
+      }
+      else {
+        MonsAtt()
+      }
     }
     else {
       alert('You try and shoot, but you have no arrows.')
@@ -2962,6 +2987,12 @@ function Kixley() {
     }
     else {
       alert('You fail to steal the monster\' weapon.')
+    }
+    if (hitCounter <= 0) {
+      WonTheFight()
+    }
+    else {
+      MonsAtt()
     }
   }
 
